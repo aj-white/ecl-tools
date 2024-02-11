@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Names from ECL</title>
+    <style>
+        body {
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            text-align: center;
+            background-color: rgb(233, 232, 232);
+        }
+
+        textarea {
+            border: 1px solid #585757;
+            padding: 5px 6px;
+            display: block;
+            width: 50%;
+            overflow: hidden;
+            resize: both;
+            min-height: 40px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background-color: #3095cf;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-sizing: border-box;
+            color: #fefeff;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            vertical-align: middle;
+        }
+
+        h2 {
+            display: block;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ecl-input">
+        <h2>Enter ECL query: <textarea id="eclEntry" class="textarea resize-ta"></textarea></h2>
+        <button onclick="convertEcl()">Remove Names</button>
+        <button onclick="deleteInput()">Clear</button>
+    </div>
+    <div class="output-container">
+        <!--<p id="outputEcl"></p>-->
+        <h2>Output: <textarea id="outputEcl" class="textarea resize-ta"></textarea></h2>
+        <button onclick="copyToClipboard()">Copy To Clipboard</button>
+        <button onclick="deleteOutput()">Clear</button>
+    </div>
+    <script>
+        function convertEcl() {
+            const inputText = document.querySelector("#eclEntry").value;
+            const re = /\|(.*?)\|/g;
+            const transformedEcl = inputText.replace(re, "");
+            document.querySelector("#outputEcl").value = transformedEcl;
+        }
+
+        function calcHeight(value) {
+            let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+            // min-height + lines x line-height + padding + border
+            let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
+            return newHeight;
+        }
+
+        function copyToClipboard() {
+            const outputArea = document.querySelector("#outputEcl");
+            outputArea.select();
+            outputArea.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(outputArea.value);
+            alert("copied text !");
+        }
+
+        function deleteInput() {
+            const inputArea = document.querySelector("#eclEntry");
+            inputArea.value = "";
+        }
+
+        function deleteOutput() {
+            const outputArea = document.querySelector("#outputEcl");
+            outputArea.value = "";
+        }
+
+        let textarea = document.querySelector(".resize-ta");
+        textarea.addEventListener("keyup", () => {
+            textarea.style.height = calcHeight(textarea.value) + "px";
+        });
+    </script>
+</body>
+</html>
