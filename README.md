@@ -19,4 +19,4 @@ This simple `ecl.html` strips the human readable names from an ECL query.
 
 ## Use
 
-Simply copy the `ecl.html` file and open it in an internet browser. Paste the query and click `Remove Names`. Use the `Copy To Clipboard` button to easily paste the outputted ECL query into whichever terminology server i sbeing used.
+Simply copy the `ecl.html` file and open it in an internet browser. Paste the query and click `Remove Names`. Use the `Copy To Clipboard` button to easily paste the outputted ECL query into whichever terminology server is being used.
